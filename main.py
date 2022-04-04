@@ -4,6 +4,7 @@ import datetime
   
 
 def name():
+  global name
   name=input('Enter your name ')
   if len(name) > 25 :
     print('Invalid Client Name')
@@ -23,7 +24,7 @@ def manual():
     package='LARGE'
   else:
     print('Enter a valid amount of minutes. There MUST be at least 300')
-    return
+    return('')
   if megabytes >= 1000 and megabytes < 4000 :
     bundle='LOW'
   elif megabytes >= 4000 and megabytes < 8000 :
@@ -94,16 +95,21 @@ def ref_check2():
     return('')
   return('')
 
-  period=int(input('Enter your contracts period '))
-  if period == 1 or period == 12 or period == 18 or period == 24:
-    check=0
+def period():
+  global periods
+  periods=int(input('Enter your contracts period '))
+  if periods == 1 or periods == 12 or periods == 18 or periods == 24:
+     check=0
   else:
     check=1
 
   if check == 1:
     print('Enter a valid contract period')
-    return
+    return('')
+  return('')
 
+def intl():
+  global call
   intlcalls=input('Does it have international calls ')
 
   call=intlcalls.upper()
@@ -114,64 +120,72 @@ def ref_check2():
 
   if check == 1:
     print('Enter a valid input for international calls')
-    return
+    return('')
+  return('')
 
-
+def cost():
+  global package
+  global bundle
+  global price
   price=0
-  data=''
-  package=''
-  
-  if a == 'LOW' or a == '1 GB':
-    if y == 'SMALL' or y == '300':
+  if bundle.upper() == 'LOW' or bundle == '1 GB':
+    if package.upper() == 'SMALL' or package == '300':
       price=500
       package='Small  (300)'
-    elif y == 'MEDIUM' or y == '600':
+    elif package.upper() == 'MEDIUM' or package == '600':
       price=650
       package='Medium (600)'
-    elif y == 'LARGE' or y == '1200':
+    elif package.upper() == 'LARGE' or package == '1200':
       price=850
       package='Large (1200)'
     data='Low (1GB)'
-  if a == 'MEDIUM' or a == '4 GB':
-    if y == 'SMALL' or y == '300':
+  if bundle.upper() == 'MEDIUM' or bundle == '4 GB':
+    if package.upper() == 'SMALL' or package == '300':
       price=700
       package='Small  (300)'
-    elif y == 'MEDIUM' or y == '600':
+    elif package.upper() == 'MEDIUM' or package == '600':
       price=850
       package='Medium (600)'
-    elif y == 'LARGE' or y == '1200':
+    elif package.upper() == 'LARGE' or package == '1200':
       price=1050
       package='Large (1200)'
     data='Medium (4GB)'
-  if a == 'HIGH' or a == '8 GB':
-    if y == 'SMALL' or y == '300':
+  if bundle.upper() == 'HIGH' or bundle == '8 GB':
+    if package.upper() == 'SMALL' or package == '300':
       price=900
       package='Small  (300)'
-    elif y == 'MEDIUM' or y == '600':
+    elif package.upper() == 'MEDIUM' or package == '600':
       price=1050
       package='Medium (600)'
-    elif y == 'LARGE' or y == '1200':
+    elif package.upper() == 'LARGE' or package == '1200':
       price=1250
       package='Large (1200)'
     data='High (8GB)'
-  if a == 'UNLIMITED' :
-    if y == 'SMALL' or y == '300':
+  if bundle.upper() == 'UNLIMITED' :
+    if package.upper() == 'SMALL' or package == '300':
       price=0
       package='Small  (300)'
-    elif y == 'MEDIUM' or y == '600':
+    elif package.upper() == 'MEDIUM' or package == '600':
       price=0
       package='Medium (600)'
-    elif y == 'LARGE' or y == '1200':
+    elif package.upper() == 'LARGE' or package == '1200':
       price=2000
       package='Large (1200)'
     data='Unlimited'
+  return('')
 
 
-
+def offer():
+  global discount
+  global periods
+  global price
+  global pound
+  global type
+  global reference
   discount=0
   type='Normal'
   if reference[5] == 'B' or reference[5] == 'b':
-    if period >= 12:
+    if periods >= 12:
       check=0
     else:
       check=1
@@ -181,31 +195,45 @@ def ref_check2():
       return
     discount=10
     type='Business'
-  elif period == 12 or period == 18:
+  elif periods == 12 or period == 18:
     discount=5
-  elif period == 24:
+  elif periods == 24:
     discount=10
   total=(price/100) * (100 - discount)
   pound=total/100
   if total == 0:
     total='N/A'
+  return('')
 
+def date():
+  global current_day
   dt = datetime.datetime.today()
   day=str(dt.day)
   month=str(dt.month)
   year=str(dt.year)
   current_day=day + '/' + month + '/' + year
+  print('')
+  return('')
   
-  
+def display(): 
+  global name
+  global reference
+  global current_day
+  global package
+  global bundle
+  global period
+  global discount
+  global pound
+  global type
   print('   ')
   print('Customer : ' + name )
   print('   ')
   print('Ref: ' + str(reference) + '             ' + '  ' + '             ' + 'Date:' + current_day)
-  print('Package: ' + package + '             ' + '     '  + 'Data:' + data )
+  print('Package: ' + package + '             ' + '     '  + 'Data:' + bundle )
   if period == 1:
-    print('Period: ' + str(period) +  ' Month                 ' + '       '  + 'Type:' + type )
+    print('Period: ' + str(periods) +  ' Month                 ' + '       '  + 'Type:' + type )
   else:
-    print('Period: ' + str(period) +  ' Months                 ' + '     '  + 'Type:' + type )
+    print('Period: ' + str(periods) +  ' Months                 ' + '     '  + 'Type:' + type )
   print('   ')
   if discount == 10:
     print('Discount: ' + str(discount) + '%                 ' + '         '  + 'Intl.calls:' + call )
@@ -300,7 +328,6 @@ def find():
 
 
 loop=True
-check=0
 while loop == True :
     print ("""
     1.Enter new Contract
@@ -318,13 +345,20 @@ while loop == True :
       choice=input('Would you like to select your bundle or manually enter your estimated minutes ')
       if choice.upper() == 'MANUALLY ENTER' or choice.upper () == 'MANUALLY' or choice.upper() == 'MANUAL':
         print(manual())
-        
+      elif choice.upper() == 'SELECT' or choice.upper () == 'CHOOSE':
         print(select())
-        print(check())
-        reference=input('Enter your reference number ')
-        print(ref_check())
-        print(ref_check2())
-        print(package,bundle)
+      print(check())
+      reference=input('Enter your reference number ')
+      print(ref_check())
+      print(ref_check2())
+      print(period())
+      print(intl())
+      print(cost())
+      print(offer())
+      print(date())
+      print(display())
+      print(discount)
+      print(package,bundle)
     elif ans=="2":
       print(summary()) 
     elif ans=="3":
